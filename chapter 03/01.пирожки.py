@@ -1,15 +1,8 @@
 import random
 print ("\t\t\tСимулятор пирожка с 'Cюрпризом'")
-print ("\nИтак, ваш пирожок...", end=" ")
-mood = random.randint(1,5)
-if mood == 1:
-    print ("с тараканами")
-elif mood == 2:
-    print ("c вишней")
-elif mood == 3:
-    print ("с мухами")
-elif mood == 4:
-    print ("c ветчиной и сыром")
-elif mood == 5:
-    print ("c слезами вашего врага!")
+
+mood = random.randint(0,4)
+list_ing = ['с тараканами', 'c вишней', 'с мухами', 'c ветчиной и сыром', 'c слезами вашего врага!']
+print ("\nИтак, ваш пирожок... " + list_ing[mood], '\n')
+
 input("\n\nНажмите Enter чтобы выйти.")
