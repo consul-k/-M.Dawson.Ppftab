@@ -11,7 +11,7 @@ import random
 WORDS = ("питон", "город", "муравей", "паук", "ответ", "овсянка", "рынок")
 
 word = random.choice(WORDS)
-tries = 0
+tries = 5
 guess = ''
 
 print(
@@ -25,22 +25,20 @@ print(
 print("В этом слове", len(word), "букв")
 
 
-while tries != 5:
+while tries != 0:
     guess = input("Есть ли тут буква - ")
-    if guess == word:
-        print("Это оно! Вы угадали!\n")
-        break
-    
+    if len(guess)>1:
+        print('Можно узнать только одну букву!')
     elif guess in word:
         print("Да!")
-        tries += 1
+        tries -= 1
     elif guess not in word:
         print("Нет!")
-        tries += 1
+        tries -= 1
+
+print("Теперь назови слово: ")
+guess = input()
+if guess == word:
+    print("Это оно! Вы угадали!\n")
 else:
-    print("Теперь назови слов\nо")
-    guess = input()
-    if guess == word:
-        print("Это оно! Вы угадали!\n")
-    else:
-        print("Увы, вы проиграли\n")
+    print("Увы, вы проиграли\n")
