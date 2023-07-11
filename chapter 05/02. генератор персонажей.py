@@ -40,7 +40,7 @@ while choice != "0":
 
     #начнем с этого
     elif choice == "1":
-        ID = 'id' + str(len(chars))
+        identifier = 'id' + str(len(chars))
         pool = 30
 
         while pool <= 30 and pool > 0:
@@ -68,21 +68,23 @@ while choice != "0":
 
                     stats[sign] = n
                     
-        chars[id] = stats
+        chars[identifier] = stats
 
     #теперь тут
     elif choice == "2":
-         change = input('Выберите id персонажа, которого вы хотите изменить: ')
-         if change in chars:
-            for stats in chars[change]:
-                print(stats)
-            new_value = input('Выберите характеристику, которую вы хотите изменить: ')
-            if new_value == 'name':
-                 chars[change][new_value] = input()
+         identifier = None
+         while identifier not in chars:
+            identifier = input('Выберите id персонажа, которого вы хотите изменить: ')
+            if identifier in chars:
+                for stats in chars[identifier]:
+                    print(stats, chars[identifier][stats])
+                new_value = input('Выберите характеристику, которую вы хотите изменить: ')
+                if new_value == 'name':
+                    chars[identifier][new_value] = input()
+                else:
+                    chars[identifier][new_value] = int(input())
             else:
-                chars[change][new_value] = int(input())
-         else:
-             print('ID отсутствует!')
+                print('ID отсутствует!')
 
     elif choice == "3":
          for id in chars:
@@ -112,5 +114,4 @@ input('\n\nНажмите Enter, чтобы выйти')
 '''
 
     #нужно добавить циклы, проверки
-
 
