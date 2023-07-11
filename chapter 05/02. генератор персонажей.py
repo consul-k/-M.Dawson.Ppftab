@@ -6,7 +6,6 @@
 но и возвращать их туда из характеристик, которым он решит присвоить другие значения.
 
 '''
-
 print("\t\t\tГенератор персонажей для ролевой игры\n")
 
 #персонажи
@@ -44,30 +43,34 @@ while choice != "0":
         ID = 'id' + str(len(chars))
         pool = 30
 
-        for sign in stats:
-            if sign == 'name':
-                name = input('Введите имя персонажа: ')
-                stats[sign] = name
-            else:
-                 print(sign, end=' ')
-                 while pool <= 30 and pool > 0:
-                    try:
-                        n = int(input())
-                        if n < 0:
-                            print('Только положительные числа')
-                        elif (pool - n) < 0:
-                            print('Слишком много!')
-                        else:
-                            pool -= n
-                    except ValueError:
-                        print('Можно вводить только числа')
+        while pool <= 30 and pool > 0:
+            for sign in stats:
+                if sign == 'name':
+                    name = input('Введите имя персонажа: ')
+                    stats[sign] = name
+                else:
+                    print(sign, end=' ')
 
-                 stats[sign] = n
-                
-                 print('У вас закончились очки для распределения!')
+                    if pool == 0:
+                        print('0 - у вас закончились очки для распределения!')
+                        n = 0
+                    else:
+                        try:
+                            n = int(input())
+                            if n < 0:
+                                print('Только положительные числа')
+                            elif (pool - n) < 0:
+                                print('Слишком много!')
+                            else:
+                                pool -= n
+                        except ValueError:
+                            print('Можно вводить только числа')
+
+                    stats[sign] = n
                     
         chars[id] = stats
 
+    #теперь тут
     elif choice == "2":
          change = input('Выберите id персонажа, которого вы хотите изменить: ')
          if change in chars:
@@ -109,3 +112,5 @@ input('\n\nНажмите Enter, чтобы выйти')
 '''
 
     #нужно добавить циклы, проверки
+
+
