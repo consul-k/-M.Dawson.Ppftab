@@ -9,15 +9,19 @@
 
 print("\t\t\tГенератор персонажей для ролевой игры\n")
 
+#количество очков для распределения
 pool = 30
+#персонажи
+chars = {}
+#характеристики
+stats = {'name':0,'power':0,'health':0,'wisdom':0,'dex-ty':0}
+id = 'id'
 
-char = [('power',0),('health',0),('wisdom',0),('dex-ty',0)]
-
-print("\nУ вас есть ",pool,"свободных очков\n")
+print("\nУ вас есть ", pool,"свободных очков\n")
 
 print('\nХарактеристики вашего персонажа: ', '\n')
 
-for i in char:
+for i in stats:
             stat, score = i
             print(stat, '\t\t', score)
 
@@ -28,61 +32,61 @@ choice = None
 while choice != "0":
     print(
     """
+
     Управление программой:
     0 - Выйти
-    1 - Показать персонажа
-    2 - Изменить характеристики
+    1 - Добавить нового персонажа
+    2 - Изменить характеристики персонажа
+    3 - Показать созданных персонажей
+    4 - Удалить персонажа
+
     """
     )
     
     choice = input("Ваш выбор: ")
-
-    print()
     
     if choice == "0":
         print("До свидания")
     elif choice == "1":
-        print('Ваш персонаж\n')
-        print('Характеристика\tОчки')
-        for i in char:
-            stat, score = i
-            print(stat, '\t\t', score)
-    elif choice == "2":
+        id += str(len(chars))
         pool = 30
-        char = [('power',0),('health',0),('wisdom',0),('dex-ty',0)]
-        for i in range(len(char)):
-            new_char = char[i][0]
-            print(char[i][0],'\t',end ='')
-            scores = int(input())
-            if scores < 0: 
-                while scores < 0:
-                    print('Вы ввели недопустимое количество очков',scores)
-                    print(char[i][0],'\t',end ='')
-                    scores = int(input())
-            pool -= scores
 
-            if pool < 0:
-                pool += scores 
-                print('У вас недостаточно очков для совершения этого действия, у вас осталось ', pool, 'очков')
-                print(char[i][0],'\t',end ='')    
-                scores = int(input())
-                if scores < 0 or scores > pool:
-                     while scores < 0 or scores > pool: 
-                        print('Вы ввели недопустимое количество очков, ',scores,'у вас осталось', pool, 'очков')
-                        print(char[i][0],'\t',end ='')
-                        scores = int(input())
-
-                pool -= scores
+        for sign in stats:
+            if sign == 'name':
+                sign = input('Введите имя персонажа: ')
+            else:
+                 print(sign, end=' ')
+                 sign = int(input())
+                 if pool > 0:
+                      pool -= sign
+                 elif pool <= 0:
+                    print('У вас не осталось очков!')
                     
-            
-            new_stat = (new_char,scores)
-            char[i] = new_stat
-            
-            if pool == 0:
-                print('\nУ вас больше нет свободных очков\n')
-                break
-          
+        chars[id] = stats
+
+    #elif choice == "2":
+    elif choice == "3":
+         for id in chars:
+            print(id)
+            for sets in chars[id]:
+                print(sets, chars[id][sets])
+    elif choice == "4":
+         delete = input('Введите ID персонажа, которого вы хотите удалить: ')
+         if delete in chars:
+            del chars[delete]
+         else:
+              print('ID отсутствует, либо неверный ввод!')
+
     else:
         print('Ошибка ввода',choice)
 
     input('\n\nНажмите Enter, чтобы выйти')
+
+    '''
+    chars = {"id_1':
+            {'name':'leon',
+             'power':23,
+             'wisdom':21,
+             'dex-ty':3
+}
+    '''
