@@ -15,17 +15,10 @@ pool = 30
 chars = {}
 #характеристики
 stats = {'name':0,'power':0,'health':0,'wisdom':0,'dex-ty':0}
-id = 'id'
 
-print("\nУ вас есть ", pool,"свободных очков\n")
+#print("\nУ вас есть ", pool,"свободных очков\n")
 
-print('\nХарактеристики вашего персонажа: ', '\n')
-
-for i in stats:
-            stat, score = i
-            print(stat, '\t\t', score)
-
-scores = 0
+#print('\nХарактеристики вашего персонажа: ', '\n')
 
 choice = None
 
@@ -47,18 +40,22 @@ while choice != "0":
     
     if choice == "0":
         print("До свидания")
+
     elif choice == "1":
-        id += str(len(chars))
+        ID = 'id' + str(len(chars))
         pool = 30
 
         for sign in stats:
             if sign == 'name':
-                sign = input('Введите имя персонажа: ')
+                name = input('Введите имя персонажа: ')
+                stats[sign] = name
             else:
                  print(sign, end=' ')
-                 sign = int(input())
+                 numbers = int(input())
+                 stats[sign] = numbers
+
                  if pool > 0:
-                      pool -= sign
+                      pool -= numbers
                  elif pool <= 0:
                     print('У вас не осталось очков!')
                     
@@ -80,6 +77,7 @@ while choice != "0":
             print(id)
             for sets in chars[id]:
                 print(sets, chars[id][sets])
+
     elif choice == "4":
          delete = input('Введите ID персонажа, которого вы хотите удалить: ')
          if delete in chars:
@@ -90,15 +88,15 @@ while choice != "0":
     else:
         print('Ошибка ввода',choice)
 
-    input('\n\nНажмите Enter, чтобы выйти')
+input('\n\nНажмите Enter, чтобы выйти')
 
-    '''
+'''
     chars = {"id_1':
             {'name':'leon',
              'power':23,
              'wisdom':21,
              'dex-ty':3
 }
-    '''
+'''
 
     #нужно добавить циклы, проверки
