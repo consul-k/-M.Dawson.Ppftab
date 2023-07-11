@@ -64,7 +64,17 @@ while choice != "0":
                     
         chars[id] = stats
 
-    #elif choice == "2":
+    elif choice == "2":
+         change = input('Выберите id персонажа, которого вы хотите изменить: ')
+         if change in chars:
+            for stats in chars[change]:
+                print(stats)
+            new_value = input('Выберите характеристику, которую вы хотите изменить: ')
+            if new_value == 'name':
+                 chars[change][new_value] = input()
+            else:
+                chars[change][new_value] = int(input())
+
     elif choice == "3":
          for id in chars:
             print(id)
@@ -90,3 +100,5 @@ while choice != "0":
              'dex-ty':3
 }
     '''
+
+    #нужно добавить циклы, проверки
