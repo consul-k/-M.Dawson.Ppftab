@@ -9,8 +9,6 @@
 
 print("\t\t\tГенератор персонажей для ролевой игры\n")
 
-#количество очков для распределения
-pool = 30
 #персонажи
 chars = {}
 #характеристики
@@ -41,6 +39,7 @@ while choice != "0":
     if choice == "0":
         print("До свидания")
 
+    #начнем с этого
     elif choice == "1":
         ID = 'id' + str(len(chars))
         pool = 30
@@ -51,13 +50,21 @@ while choice != "0":
                 stats[sign] = name
             else:
                  print(sign, end=' ')
-                 numbers = int(input())
-                 stats[sign] = numbers
+                 while pool <= 30 and pool > 0:
+                    try:
+                        n = int(input())
+                        if n < 0:
+                            print('Только положительные числа')
+                        elif (pool - n) < 0:
+                            print('Слишком много!')
+                        else:
+                            pool -= n
+                    except ValueError:
+                        print('Можно вводить только числа')
 
-                 if pool > 0:
-                      pool -= numbers
-                 elif pool <= 0:
-                    print('У вас не осталось очков!')
+                 stats[sign] = n
+                
+                 print('У вас закончились очки для распределения!')
                     
         chars[id] = stats
 
@@ -71,6 +78,8 @@ while choice != "0":
                  chars[change][new_value] = input()
             else:
                 chars[change][new_value] = int(input())
+         else:
+             print('ID отсутствует!')
 
     elif choice == "3":
          for id in chars:
