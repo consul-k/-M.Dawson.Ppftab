@@ -43,42 +43,54 @@ while choice != "0":
         identifier = 'id' + str(len(chars))
         pool = 30
 
-        while pool <= 30 and pool > 0:
-            for sign in stats:
-                if sign == 'name':
-                    name = input('Введите имя персонажа: ')
-                    stats[sign] = name
+        for sign in stats:
+            if sign == 'name':
+                name = input('Введите имя персонажа: ')
+                stats[sign] = name
+            else:
+                print(sign, end=' ')
+
+                if pool == 0:
+                    print('0 - у вас закончились очки для распределения!')
+                    n = 0
                 else:
-                    print(sign, end=' ')
+                    try:
+                        n = int(input())
+                        if n < 0:
+                            print('Только положительные числа')
+                        elif (pool - n) < 0:
+                            print('Слишком много!')
+                        else:
+                            pool -= n
+                    except ValueError:
+                        print('Можно вводить только числа')
 
-                    if pool == 0:
-                        print('0 - у вас закончились очки для распределения!')
-                        n = 0
-                    else:
-                        try:
-                            n = int(input())
-                            if n < 0:
-                                print('Только положительные числа')
-                            elif (pool - n) < 0:
-                                print('Слишком много!')
-                            else:
-                                pool -= n
-                        except ValueError:
-                            print('Можно вводить только числа')
-
-                    stats[sign] = n
+                stats[sign] = n
                     
         chars[identifier] = stats
+        if pool > 0:
+            print('У вас осталось неиспользовано ', pool, 'очков')
 
     #теперь тут
+    #нужна проверка, нет ли свободных очков, которые можно добавить
     elif choice == "2":
          identifier = None
+         used_pool = []
+
          while identifier not in chars:
             identifier = input('Выберите id персонажа, которого вы хотите изменить: ')
+
             if identifier in chars:
                 for stats in chars[identifier]:
+                    used_pool.append(chars[identifier][stats])
                     print(stats, chars[identifier][stats])
+
+                print('У вас осталось ', sum(used_pool),'неиспользованых очков' )
+
                 new_value = input('Выберите характеристику, которую вы хотите изменить: ')
+                while new_value not in chars[identifier]:
+                     new_value = input('Данной характеристики не существует! Выберите характеристику, которую вы хотите изменить: ')
+
                 if new_value == 'name':
                     chars[identifier][new_value] = input()
                 else:
