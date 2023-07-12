@@ -6,6 +6,7 @@
 но и возвращать их туда из характеристик, которым он решит присвоить другие значения.
 
 '''
+
 print("\t\t\tГенератор персонажей для ролевой игры\n")
 
 #персонажи
@@ -17,74 +18,81 @@ stats = {'name':0,'power':0,'health':0,'wisdom':0,'dex-ty':0}
 
 #print('\nХарактеристики вашего персонажа: ', '\n')
 
-choice = None
+def menu():
 
-while choice != "0":
-    print(
-    """
+    choice = None
 
-    Управление программой:
-    0 - Выйти
-    1 - Добавить нового персонажа
-    2 - Изменить характеристики персонажа
-    3 - Показать созданных персонажей
-    4 - Удалить персонажа
+    while choice != '0':
+        print(
+        """
 
-    """
-    )
-    
-    choice = input("Ваш выбор: ")
-    
-    if choice == "0":
-        print("До свидания")
+        Управление программой:
+        0 - Выйти
+        1 - Добавить нового персонажа
+        2 - Перераспределить характеристики персонажа
+        3 - Показать созданных персонажей
+        4 - Удалить персонажа
 
-    #начнем с этого
-    elif choice == "1":
-        identifier = 'id' + str(len(chars))
-        pool = 30
+        """
+        )
+        
+        choice = input("Ваш выбор: ")
+        
+        if choice == '0':
+            print("До свидания")
+        elif choice == '1':
+            create()
+        elif choice == '2':
+            red_points()
+        elif choice == '3':
+            show()
+        elif choice == '4':
+            delete()
+        else:
+            print('Ошибка ввода!')
 
-        for sign in stats:
-            if sign == 'name':
-                name = input('Введите имя персонажа: ')
-                stats[sign] = name
+
+def create():
+    identifier = 'id' + str(len(chars))
+    pool = 30
+
+    for sign in stats:
+        if sign == 'name':
+            name = input('Введите имя персонажа: ')
+            stats[sign] = name
+        else:
+            print(sign, end=' ')
+
+            if pool == 0:
+                print('0 - у вас закончились очки для распределения!')
+                n = 0
             else:
-                print(sign, end=' ')
+                try:
+                    n = int(input())
+                    if n < 0:
+                        print('Только положительные числа')
+                    elif (pool - n) < 0:
+                        print('Слишком много!')
+                    else:
+                        pool -= n
+                except ValueError:
+                    print('Можно вводить только числа')
+            stats[sign] = n
 
-                if pool == 0:
-                    print('0 - у вас закончились очки для распределения!')
-                    n = 0
-                else:
-                    try:
-                        n = int(input())
-                        if n < 0:
-                            print('Только положительные числа')
-                        elif (pool - n) < 0:
-                            print('Слишком много!')
-                        else:
-                            pool -= n
-                    except ValueError:
-                        print('Можно вводить только числа')
-
-                stats[sign] = n
-                    
         chars[identifier] = stats
         if pool > 0:
             print('У вас осталось неиспользовано ', pool, 'очков')
 
-    #теперь тут
-    #нужна проверка, нет ли свободных очков, которые можно добавить
-    elif choice == "2":
-         identifier = None
-         used_pool = []
+def red_points():
+        identifier = None
+        used_pool = []
 
-         while identifier not in chars:
+        while identifier not in chars:
             identifier = input('Выберите id персонажа, которого вы хотите изменить: ')
-
             if identifier in chars:
                 for stats in chars[identifier]:
                     used_pool.append(chars[identifier][stats])
                     print(stats, chars[identifier][stats])
-
                 print('У вас осталось ', sum(used_pool),'неиспользованых очков' )
 
                 new_value = input('Выберите характеристику, которую вы хотите изменить: ')
@@ -98,32 +106,23 @@ while choice != "0":
             else:
                 print('ID отсутствует!')
 
-    elif choice == "3":
-         for id in chars:
-            print(id)
-            for sets in chars[id]:
-                print(sets, chars[id][sets])
 
-    elif choice == "4":
-         delete = input('Введите ID персонажа, которого вы хотите удалить: ')
-         if delete in chars:
-            del chars[delete]
-         else:
-              print('ID отсутствует, либо неверный ввод!')
+def show():
+    for id in chars:
+        print(id)
+        for sets in chars[id]:
+            print(sets, chars[id][sets])
 
+
+def delete():
+    delete = input('Введите ID персонажа, которого вы хотите удалить: ')   
+    if delete in chars:
+        del chars[delete]
     else:
-        print('Ошибка ввода',choice)
+        print('ID отсутствует, либо неверный ввод!')
 
+
+            
+menu()
 input('\n\nНажмите Enter, чтобы выйти')
-
-'''
-    chars = {"id_1':
-            {'name':'leon',
-             'power':23,
-             'wisdom':21,
-             'dex-ty':3
-}
-'''
-
-    #нужно добавить циклы, проверки
 
