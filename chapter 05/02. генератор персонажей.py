@@ -41,8 +41,8 @@ def menu():
             print("До свидания")
         elif choice == '1':
             create()
-        #elif choice == '2':
-            #red_points()
+        elif choice == '2':
+            red_points()
         elif choice == '3':
             show()
         elif choice == '4':
@@ -101,30 +101,36 @@ def create():
     chars[identifier] = stats
 
 
-'''
+
 def red_points():
-        identifier = None
-        used_pool = []
+    identifier = None
+    pool = 30
+    used_pool = []
 
-        while identifier not in chars:
-            identifier = input('Выберите id персонажа, которого вы хотите изменить: ')
-            if identifier in chars:
-                for stats in chars[identifier]:
-                    used_pool.append(chars[identifier][stats])
-                    print(stats, chars[identifier][stats])
-                print('У вас осталось ', sum(used_pool),'неиспользованых очков' )
+    while identifier not in chars:
+        identifier = input('Выберите id персонажа, которого вы хотите изменить: ')
+        if identifier not in chars:
+            print('ID отсутствует!')
 
-                new_value = input('Выберите характеристику, которую вы хотите изменить: ')
-                while new_value not in chars[identifier]:
-                     new_value = input('Данной характеристики не существует! Выберите характеристику, которую вы хотите изменить: ')
+    for stats in chars[identifier]:
+        if stats != 'name':
+            used_pool.append(chars[identifier][stats])
+        print(stats, chars[identifier][stats])
+    print('У вас осталось ', pool-sum(used_pool),'неиспользованых очков' )
 
-                if new_value == 'name':
-                    chars[identifier][new_value] = input()
-                else:
-                    chars[identifier][new_value] = int(input())
-            else:
-                print('ID отсутствует!')
-'''
+    ending = None
+    while ending != 'N':
+        new_value = input('Выберите характеристику, которую вы хотите изменить: ')
+        while new_value not in chars[identifier]:
+                new_value = input('Данной характеристики не существует! Выберите характеристику, которую вы хотите изменить: ')
+
+        if new_value == 'name':
+            chars[identifier][new_value] = input()
+        else:
+            chars[identifier][new_value] = int(input())
+        while ending != 'N' and ending != 'Y':
+            ending = input('Вы хотите продолжить редактирование? (Y|N) ').upper()
+
 
 def show():
     if len(chars) == 0:
@@ -133,8 +139,6 @@ def show():
         print(identifier)
         for sets in chars[identifier]:
             print(sets, chars[identifier][sets])
-
-        #добавить если нет созданных персонажей
 
 
 def delete():
@@ -160,4 +164,3 @@ input('\n\nНажмите Enter, чтобы выйти')
 '''
 
     #нужно добавить циклы, проверки
-
