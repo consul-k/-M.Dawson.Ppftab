@@ -11,12 +11,11 @@ print("\t\t\tГенератор персонажей для ролевой иг�
 
 #персонажи
 chars = {}
-#характеристики
-stats = {'name':0,'power':0,'health':0,'wisdom':0,'dex-ty':0}
 
 #print("\nУ вас есть ", pool,"свободных очков\n")
 
 #print('\nХарактеристики вашего персонажа: ', '\n')
+
 
 def menu():
 
@@ -42,8 +41,8 @@ def menu():
             print("До свидания")
         elif choice == '1':
             create()
-        elif choice == '2':
-            red_points()
+        #elif choice == '2':
+            #red_points()
         elif choice == '3':
             show()
         elif choice == '4':
@@ -53,15 +52,25 @@ def menu():
 
 
 def create():
-    identifier = 'id' + str(len(chars))
-    pool = 30
 
-    for sign in stats:
-        if sign == 'name':
-            name = input('Введите имя персонажа: ')
-            stats[sign] = name
-        else:
-            print(sign, end=' ')
+    identifier = 'id' + str(len(chars))
+    chars[identifier] = {}
+
+    stats = {'name':0,'power':0,'health':0,'wisdom':0,'dex-ty':0}
+
+    name = input('Введите имя персонажа: ')
+    stats['name'] = name
+
+
+    def add_stats():
+        
+        pool = 30
+
+        for stat in stats:
+            if stat == 'name':
+                continue
+
+            print(stat, end=' ')
 
             if pool == 0:
                 print('0 - у вас закончились очки для распределения!')
@@ -77,12 +86,22 @@ def create():
                         pool -= n
                 except ValueError:
                     print('Можно вводить только числа')
-            stats[sign] = n
+                stats[stat] = n
 
-        chars[identifier] = stats
         if pool > 0:
             print('У вас осталось неиспользовано ', pool, 'очков')
+            ask = None
+            while ask != 'Y' and ask != 'N':
+                ask = input('Хотите добавить их? (Y|N)').upper()
+            if ask == 'Y':
+                add_stats()
 
+    add_stats()
+
+    chars[identifier] = stats
+
+
+'''
 def red_points():
         identifier = None
         used_pool = []
@@ -105,13 +124,17 @@ def red_points():
                     chars[identifier][new_value] = int(input())
             else:
                 print('ID отсутствует!')
-
+'''
 
 def show():
-    for id in chars:
-        print(id)
-        for sets in chars[id]:
-            print(sets, chars[id][sets])
+    if len(chars) == 0:
+        print('Нет созданных персонажей')
+    for identifier in chars:
+        print(identifier)
+        for sets in chars[identifier]:
+            print(sets, chars[identifier][sets])
+
+        #добавить если нет созданных персонажей
 
 
 def delete():
@@ -125,4 +148,16 @@ def delete():
             
 menu()
 input('\n\nНажмите Enter, чтобы выйти')
+
+
+'''
+    chars = {"id_1':
+            {'name':'leon',
+             'power':23,
+             'wisdom':21,
+             'dex-ty':3
+}
+'''
+
+    #нужно добавить циклы, проверки
 
