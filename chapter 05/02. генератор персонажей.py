@@ -116,11 +116,27 @@ def red_points():
         print(stats, chars[identifier][stats])
     
     print('У вас осталось ', pool,' неиспользованых очков' )
-    
+        
     free_scores = pool
 
     ending = None
+
+
     while ending != 'N':
+        while free_scores == 0:
+            print('У вас не хватает свободных очков! Вы можете сбросить характеристики, чтобы получить свободные очки')
+            ask = None
+            while ask != 'Y' and ask != 'N':
+                ask = input('Выполнить полный сброс текущих хар-к? Все значения станут 0 (Y|N)').upper()
+            if ask == 'Y':
+                free_scores = 30
+                for stats in chars[identifier]:
+                    if stats != 'name':
+                        chars[identifier][stats] = 0
+            elif ask == 'N':
+                ending = 'N'
+                
+
         stat = input('Выберите характеристику, которую вы хотите изменить: ')
         while stat not in chars[identifier]:
                 stat = input('Данной характеристики не существует! Выберите характеристику, которую вы хотите изменить: ')
@@ -159,15 +175,6 @@ def red_points():
                 free_scores += new_stat_value
 
             print('У вас осталось', free_scores, 'свободных очков')
-
-            if free_scores == 0:
-                print('У вас не хватает свободных очков! Вы можете сбросить характеристики, чтобы получить свободные очки')
-                ask = input('Выполнить полный сброс текущих хар-к? Все значения станут 0 (Y|N)').upper()
-                if ask == 'Y':
-                    free_scores = 30
-                    for stats in chars[identifier]:
-                        if stats != 'name':
-                            chars[identifier][stats] = 0
 
 
         while ending != 'N' and ending != 'Y':
