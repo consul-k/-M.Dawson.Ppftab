@@ -55,7 +55,7 @@ def create():
 
     identifier = 'id' + str(len(chars))
     chars[identifier] = {}
-
+   
     stats = {'name':0,'power':0,'health':0,'wisdom':0,'dex-ty':0}
 
     name = input('Введите имя персонажа: ')
@@ -63,9 +63,8 @@ def create():
 
 
     def add_stats():
-        
         pool = 30
-
+        
         for stat in stats:
             if stat == 'name':
                 continue
@@ -105,7 +104,7 @@ def create():
 def red_points():
     identifier = None
     pool = 30
-    used_pool = []
+    used_scores = 0
 
     while identifier not in chars:
         identifier = input('Выберите id персонажа, которого вы хотите изменить: ')
@@ -114,22 +113,49 @@ def red_points():
 
     for stats in chars[identifier]:
         if stats != 'name':
-            used_pool.append(chars[identifier][stats])
+            used_scores += chars[identifier][stats]
         print(stats, chars[identifier][stats])
-    print('У вас осталось ', pool-sum(used_pool),'неиспользованых очков' )
+    pool -= used_scores
+    print('У вас осталось ', pool,' неиспользованых очков' )
+    
+    free_scores = pool
 
     ending = None
     while ending != 'N':
         new_value = input('Выберите характеристику, которую вы хотите изменить: ')
         while new_value not in chars[identifier]:
-                new_value = input('Данной характеристики не существует! Выберите характеристику, которую вы хотите изменить: ')
+            new_value = input('Данной характеристики не существует! Выберите характеристику, которую вы хотите изменить: ')
 
-        if new_value == 'name':
-            chars[identifier][new_value] = input()
-        else:
-            chars[identifier][new_value] = int(input())
-        while ending != 'N' and ending != 'Y':
-            ending = input('Вы хотите продолжить редактирование? (Y|N) ').upper()
+            if new_value == 'name':
+                chars[identifier][new_value] = input()
+            else:
+                
+                #что делать если я хочу изменить одну конкретную хар-ку
+
+                if free_scores > 0:
+                    try:
+                        chars[identifier][new_value] += int(input())
+                        if chars[identifier][new_value] < 0:
+                            print('Только положительные числа')
+                        elif (free_scores - chars[identifier][new_value]) < 0:  
+                            print('Слишком много!')
+                        else:
+                            free_scores -= chars[identifier][new_value]
+                    except ValueError:
+                        print('Можно вводить только числа')
+
+                else:
+                    print('У вас не осталось свободных очков! Вы можете сбросить характеристики, чтобы получить свободные очки')
+                    ask = input('Выполнить сброс? (Y|N)').upper()
+                    if ask == 'Y':
+                        free_scores = 30
+                        for stats in chars[identifier]:
+                            if stats != 'name':
+                                chars[identifier][stats] = 0
+
+
+            while ending != 'N' and ending != 'Y':
+                ending = input('Вы хотите продолжить редактирование? (Y|N) ').upper()
 
 
 def show():
@@ -162,5 +188,3 @@ input('\n\nНажмите Enter, чтобы выйти')
              'dex-ty':3
 }
 '''
-
-    #нужно добавить циклы, проверки
