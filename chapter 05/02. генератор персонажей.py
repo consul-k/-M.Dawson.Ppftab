@@ -12,10 +12,6 @@ print("\t\t\tГенератор персонажей для ролевой иг�
 #персонажи
 chars = {}
 
-#print("\nУ вас есть ", pool,"свободных очков\n")
-
-#print('\nХарактеристики вашего персонажа: ', '\n')
-
 
 def menu():
 
@@ -106,6 +102,7 @@ def red_points():
     pool = 30
     
     while identifier not in chars:
+        
         identifier = input('Выберите id персонажа, которого вы хотите изменить: ')
         if identifier not in chars:
             print('ID отсутствует!')
@@ -123,7 +120,7 @@ def red_points():
 
 
     while ending != 'N':
-        while free_scores == 0:
+        if free_scores == 0:
             print('У вас не хватает свободных очков! Вы можете сбросить характеристики, чтобы получить свободные очки')
             ask = None
             while ask != 'Y' and ask != 'N':
@@ -133,48 +130,49 @@ def red_points():
                 for stats in chars[identifier]:
                     if stats != 'name':
                         chars[identifier][stats] = 0
-            elif ask == 'N':
-                ending = 'N'
+            else:
+                break
                 
 
-        stat = input('Выберите характеристику, которую вы хотите изменить: ')
-        while stat not in chars[identifier]:
-                stat = input('Данной характеристики не существует! Выберите характеристику, которую вы хотите изменить: ')
+        elif free_scores > 0:
 
-        if stat == 'name':
-            print(chars[identifier][stat], end=' ')
-            chars[identifier][stat] = input()
-        else:
-            #где то тут нужен цикл
-            #что делать если я хочу изменить одну конкретную хар-ку
-            new_stat_value = None
-            perm_value = None
-            
-            while perm_value != True:
-                #while free_scores > 0:
-                try:
-                    print(stat, end=' ')
-                    new_stat_value = int(input())
+            stat = input('Выберите характеристику, которую вы хотите изменить: ')
+            while stat not in chars[identifier]:
+                    stat = input('Данной характеристики не существует! Выберите характеристику, которую вы хотите изменить: ')
 
-                    if new_stat_value  < 0:
-                        print('Только положительные числа')
-                    #вот тут важный момент
-                    elif (free_scores - new_stat_value) < 0:  
-                        print('Вы хотите добавить слишком много! У вас ', free_scores, ' очков')
-                    else:
-                          perm_value = True
+            if stat == 'name':
+                print(chars[identifier][stat], end=' ')
+                chars[identifier][stat] = input()
+            else:
+                
+                new_stat_value = None
+                perm_value = None
+                
+                while perm_value != True:
+                    
+                    try:
+                        print(stat, end=' ')
+                        new_stat_value = int(input())
 
-                except ValueError:
-                    print('Можно вводить только числа')
+                        if new_stat_value  < 0:
+                            print('Только положительные числа')
+                        
+                        elif (free_scores - new_stat_value) < 0:  
+                            print('Вы хотите добавить слишком много! У вас ', free_scores, ' очков')
+                        else:
+                            perm_value = True
 
-            if chars[identifier][stat] < new_stat_value:
-                chars[identifier][stat] += new_stat_value
-                free_scores -= new_stat_value
-            elif chars[identifier][stat] > new_stat_value:
-                chars[identifier][stat] -= new_stat_value
-                free_scores += new_stat_value
+                    except ValueError:
+                        print('Можно вводить только числа')
 
-            print('У вас осталось', free_scores, 'свободных очков')
+                if chars[identifier][stat] < new_stat_value:
+                    chars[identifier][stat] += new_stat_value
+                    free_scores -= new_stat_value
+                elif chars[identifier][stat] > new_stat_value:
+                    chars[identifier][stat] -= new_stat_value
+                    free_scores += new_stat_value
+
+                print('У вас осталось', free_scores, 'свободных очков')
 
 
         while ending != 'N' and ending != 'Y':
@@ -201,14 +199,3 @@ def delete():
             
 menu()
 input('\n\nНажмите Enter, чтобы выйти')
-
-
-'''
-    chars = {"id_1':
-            {'name':'leon',
-             'power':23,
-             'wisdom':21,
-             'dex-ty':3
-}
-'''
-
