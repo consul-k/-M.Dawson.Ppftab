@@ -7,6 +7,7 @@
 
 '''
 
+#словарь с парами
 son_dad = {'Tirion' : 'Taiwin','Aria' : 'Ned Star','Jon' : 'Raegar',
            'Jendry' : 'Robert'}
 
@@ -25,9 +26,10 @@ while choice != "0":
     )
     choice = input("Ваш выбор: ")
 
-    print()     #?
+    #выход
     if choice == "0":
         print("До свидания")
+    #показ нужной пары
     elif choice == "1":
         son = input("Чей отец вам интересен? ")
         if son in son_dad:
@@ -35,6 +37,7 @@ while choice != "0":
             print("\n", son,"имеет отца",father)
         else:
             print("\nУвы, нет данных о: ", son)
+    #добавления пары
     elif choice == "2":
         son = input("Какого отпрыска вы хотите добавить? ")
         if son not in son_dad:
@@ -43,6 +46,7 @@ while choice != "0":
             print("\nГерой", son, "добавлен в словарь.")
         else:
             print("\nТакой герой уже есть!")
+    #изменения пары
     elif choice == "3":
         son = input("Чьего отца вы хотите изменить? ")
         if son in son_dad:
@@ -51,6 +55,7 @@ while choice != "0":
             print("\nГерой", son, "получил исправленную версию!")
         else:
             print("\nТакого героя у нас нет!")
+    #удаление пары
     elif choice == "4":
         son = input("Какого героя вы хотите удалить? ")
         if son in son_dad:
