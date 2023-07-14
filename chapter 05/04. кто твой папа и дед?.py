@@ -69,4 +69,4 @@ while choice != "0":
     else:
         print("В меня нет такого пункта", choice)
         
-    input("\n\nНажмите Enter, чтобы выйти.")
+input("\n\nНажмите Enter, чтобы выйти.")
