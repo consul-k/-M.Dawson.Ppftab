@@ -20,7 +20,7 @@ while choice != "0":
     0 - Выйти
     1 - Найти отца персонажа
     2 - Добавить пару
-    3 - Изменить отца
+    3 - Изменить пару
     4 - Удалить пару
     """
     )
@@ -48,13 +48,33 @@ while choice != "0":
             print("\nТакой герой уже есть!")
     #изменения пары
     elif choice == "3":
-        son = input("Чьего отца вы хотите изменить? ")
-        if son in son_dad:
-            father = input("Введите нового отца: ")
-            son_dad[son] = father
-            print("\nГерой", son, "получил исправленную версию!")
-        else:
-            print("\nТакого героя у нас нет!")
+
+        choose = None
+        choose_val = None
+
+        while not choose_val:
+            choose = input('Выберите одно из имен пары, которую хотите изменить ')
+
+            if choose in son_dad:
+                choose_val = 'good'
+            elif choose not in son_dad:
+                for son in son_dad:
+                    if son_dad[son] == choose:
+                        choose_val = 'good'
+
+        if choose_val == 'good':
+            for pair in son_dad:
+                if son_dad[pair] == choose:
+                    father = input('Вы выбрали отца! Введите новое значение: ')
+                    son_dad[pair] = father
+                    print("\nГерой", pair, "был переименован в - ", father)
+                    break
+                elif pair == choose:
+                    son = input('Вы выбрали сына! Введите новое значение: ')
+                    son_dad[son] = son_dad.pop(pair)
+                    print("\nГерой", pair, "был переименован в - ", son)
+                    break
+                
     #удаление пары
     elif choice == "4":
         son = input("Какого героя вы хотите удалить? ")
@@ -67,4 +87,4 @@ while choice != "0":
     else:
         print("В меня нет такого пункта", choice)
         
-    input("\n\nНажмите Enter, чтобы выйти.")
+input("\n\nНажмите Enter, чтобы выйти.")
