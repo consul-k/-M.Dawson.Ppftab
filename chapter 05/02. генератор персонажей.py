@@ -9,10 +9,13 @@
 
 print("\t\t\tГенератор персонажей для ролевой игры\n")
 
-#персонажи
+# персонажи
 chars = {}
 
+ # Пример
+ # chars = {"id1': {'name':'leon', 'power':12, 'health':7 , 'wisdom':5, 'dex-ty':6 }}
 
+# меню выбора
 def menu():
 
     choice = None
@@ -46,19 +49,24 @@ def menu():
         else:
             print('Ошибка ввода!')
 
-
+#создание персонажа
 def create():
 
+    #создание id персонажа
     identifier = 'id' + str(len(chars))
     chars[identifier] = {}
    
+    #характеристики
     stats = {'name':0,'power':0,'health':0,'wisdom':0,'dex-ty':0}
 
+    #создание имени
     name = input('Введите имя персонажа: ')
     stats['name'] = name
 
-
+    #добавить значения характеристик
     def add_stats():
+        
+        #количество очков для распределения
         pool = 30
         
         for stat in stats:
@@ -96,30 +104,35 @@ def create():
     chars[identifier] = stats
 
 
-
+#редактирование персонажа
 def red_points():
     identifier = None
     pool = 30
     
+    #проверка, есть ли id в словаре персонажей
     while identifier not in chars:
-        
         identifier = input('Выберите id персонажа, которого вы хотите изменить: ')
         if identifier not in chars:
             print('ID отсутствует!')
 
+    #проверяем сколько осталось неиспользованных очков
     for stats in chars[identifier]:
         if stats != 'name':
             pool -= chars[identifier][stats]
         print(stats, chars[identifier][stats])
     
     print('У вас осталось ', pool,' неиспользованых очков' )
-        
+    
+    #свободные очки
     free_scores = pool
 
+    #переменная переключатель
     ending = None
 
-
+    #цикл изменения характеристик
     while ending != 'N':
+
+        #если свободных очков не осталось
         if free_scores == 0:
             print('У вас не хватает свободных очков! Вы можете сбросить характеристики, чтобы получить свободные очки')
             ask = None
@@ -133,7 +146,7 @@ def red_points():
             else:
                 break
                 
-
+        #если есть свободные очки
         elif free_scores > 0:
 
             stat = input('Выберите характеристику, которую вы хотите изменить: ')
@@ -144,8 +157,9 @@ def red_points():
                 print(chars[identifier][stat], end=' ')
                 chars[identifier][stat] = input()
             else:
-                
+                #новое значение хар-ки
                 new_stat_value = None
+                #проверка допустимости введенного значения
                 perm_value = None
                 
                 while perm_value != True:
@@ -178,7 +192,7 @@ def red_points():
         while ending != 'N' and ending != 'Y':
             ending = input('Вы хотите продолжить редактирование? (Y|N) ').upper()
 
-
+# показ созданных персонажей
 def show():
     if len(chars) == 0:
         print('Нет созданных персонажей')
@@ -187,7 +201,7 @@ def show():
         for sets in chars[identifier]:
             print(sets, chars[identifier][sets])
 
-
+# удаление персонажа
 def delete():
     delete = input('Введите ID персонажа, которого вы хотите удалить: ')   
     if delete in chars:
@@ -196,6 +210,5 @@ def delete():
         print('ID отсутствует, либо неверный ввод!')
 
 
-            
 menu()
 input('\n\nНажмите Enter, чтобы выйти')
