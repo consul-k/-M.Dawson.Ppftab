@@ -95,7 +95,7 @@ def create():
             print('У вас осталось неиспользовано ', pool, 'очков')
             ask = None
             while ask != 'Y' and ask != 'N':
-                ask = input('Хотите добавить их? (Y|N)').upper()
+                ask = input('Хотите добавить их? (Y|N) ').upper()
             if ask == 'Y':
                 add_stats()
 
@@ -137,7 +137,7 @@ def red_points():
             print('У вас не хватает свободных очков! Вы можете сбросить характеристики, чтобы получить свободные очки')
             ask = None
             while ask != 'Y' and ask != 'N':
-                ask = input('Выполнить полный сброс текущих хар-к? Все значения станут 0 (Y|N)').upper()
+                ask = input('Выполнить полный сброс текущих хар-к? Все значения станут 0 (Y|N) ').upper()
             if ask == 'Y':
                 free_scores = 30
                 for stats in chars[identifier]:
