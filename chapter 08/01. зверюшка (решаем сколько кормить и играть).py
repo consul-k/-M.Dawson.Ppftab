@@ -37,7 +37,7 @@ class Critter(object):
     def eat(self):
         print('Сколько еды вы дадите мне? ',end =' ')
         food_gain = int(input())
-        print("Мммм! Спасибо! ")
+        print("Мммм! Спасибо!")
         self.hunger -= food_gain
         if self.hunger < 0:
             self.hunger = 0
