@@ -44,8 +44,12 @@ class Critter(object):
 
     
     def eat(self):
-        print('Сколько еды вы хотите дать? ',end =' ')
-        food_gain = int(input())
+        food_gain = 0
+        while food_gain == 0:
+            try:
+                food_gain = int(input('Сколько кг. еды вы хотите дать? '))
+            except:
+                print('Только в цифрах!')
         print("Ммммм! Спасибо.")
         self.hunger -= food_gain
         if self.hunger < 0:
@@ -53,8 +57,12 @@ class Critter(object):
         self.__pass_time()
 
     def play(self):
-        print('Сколько времени вы будете играть? ',end =' ')
-        fun_time = int(input())
+        fun_time = 0
+        while fun_time == 0:
+            try:
+                fun_time = int(input('Сколько времени в минутах вы будете играть? '))
+            except:
+                print('Только в цифрах!')
         print("Вуиии!")
         self.boredom -= fun_time
         if self.boredom < 0:
@@ -93,27 +101,27 @@ def main():
         if choice == "0":
             print("Пока-пока.")
 
-        # узнать состояние животных
+        # узнать состояние зверушки
         elif choice == "1":
             crit.talk()
             crit1.talk()
             crit2.talk()
         
-        # покормить животных
+        # покормить зверушку
         elif choice == "2":
             crit.eat()
             crit1.eat()
             crit2.eat()
          
-        # поиграть с животными
+        # поиграть с зверушкой
         elif choice == "3":
             crit.play()
             crit1.play()
             crit2.play()
 
-        # другое значение 
+        # другой ввод
         else:
             print("\nИзвините, но", choice, "это недоступный вариант.")
 
 main()
-("\n\nНажмите Enter, чтобы выйти")
+("\n\nНажмите Enter, чтобы выйти.")
