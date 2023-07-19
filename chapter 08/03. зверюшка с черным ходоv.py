@@ -7,15 +7,16 @@
 
 '''
 
+
 class Critter(object):
-    #Зверюшка
+    #Зверушка
     def __init__(self, name, hunger = 0, boredom = 0):
         self.name = name
         self.hunger = hunger
         self.boredom = boredom
 
     def __str__(self):
-        stats = '\tТочные значения:\n'
+        stats = 'Точные значения:\n'
         stats += '\tимя: ' + self.name + '\n'
         stats += '\tуровень голода: ' +  str(self.hunger) + '\n'
         stats += '\tуровень скуки: ' + str(self.boredom) + '\n'
@@ -43,8 +44,12 @@ class Critter(object):
         self.__pass_time()
     
     def eat(self):
-        print('Сколько еды вы дадите мне? ',end =' ')
-        food_gain = int(input())
+        food_gain = 0
+        while food_gain == 0:
+            try:
+                food_gain = int(input('Сколько кг. еды вы хотите дать? '))
+            except:
+                print('Только в цифрах!')
         print("Мммм! Спасибо!")
         self.hunger -= food_gain
         if self.hunger < 0:
@@ -52,9 +57,13 @@ class Critter(object):
         self.__pass_time()
 
     def play(self):
-        print('Сколько времени вы будете со мной играть? ',end =' ')
-        fun_time = int(input())
-        print("Урааа!")
+        fun_time = 0
+        while fun_time == 0:
+            try:
+                fun_time = int(input('Сколько времени в минутах вы будете играть? '))
+            except:
+                print('Только в цифрах!')
+        print("Вуиии!")
         self.boredom -= fun_time
         if self.boredom < 0:
             self.boredom = 0
@@ -62,7 +71,7 @@ class Critter(object):
 
 
 def main():
-    crit_name = input("Как вы хотите назвать зверюшку? ")
+    crit_name = input("Как вы хотите назвать зверушку? ")
     crit = Critter(crit_name)
 
     choice = None  
@@ -72,9 +81,9 @@ def main():
         Зверушка!
     
         0 - Выход
-        1 - Узнать состояние зверюшки
-        2 - Покормить зверюшку
-        3 - Поиграть с зверюшкой
+        1 - Узнать состояние зверушки
+        2 - Покормить зверушку
+        3 - Поиграть с зверушкой
         """)
     
         choice = input("Выбор: ")
@@ -84,26 +93,24 @@ def main():
         if choice == "0":
             print("До свидания!")
 
-        # узнать состояние зверюшки
+        # узнать состояние зверушки
         elif choice == "1":
             crit.talk()
         
-        # Покормить зверюшку
+        # покормить зверушку
         elif choice == "2":
             crit.eat()
          
-        # Поиграть с зверюшкой
+        # поиграть с зверушкой
         elif choice == "3":
             crit.play()
-          
-        # черный ход
+
         elif choice == "777":
             print(crit)
 
         # другой ввод
         else:
             print("\nИзвините, но", choice, "недопустимый выбор")
-
 main()
 
-("\n\nНажмите Enter, чтобы выйти.") 
+("\n\nНажмите Enter, чтобы выйти.")
