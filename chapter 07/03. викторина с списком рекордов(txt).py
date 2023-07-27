@@ -71,6 +71,7 @@ def record_list():
                 return
             except EOFError:
                 break
+        f.close()
             
 
 def welcome(title):
